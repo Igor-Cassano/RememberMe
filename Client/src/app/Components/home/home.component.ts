@@ -10,6 +10,7 @@ import { NavbarComponent } from '../navbar/navbar.component';
 import { CookieBannerComponent } from '../cookie-banner/cookie-banner.component';
 import { BottomBarComponent } from '../bottom-bar/bottom-bar.component';
 import { FooterComponent } from '../footer/footer.component';
+import { NotificationService } from '../../Services/notification.service';
 
 @Component({
   selector: 'app-home',
@@ -31,7 +32,8 @@ export class HomeComponent implements OnInit {
     private geo: GeolocationService,
     private cemeteryService: CemeteryService,
     private mapService: LeafletMapService,
-    private router: Router
+    private router: Router,
+    private notification: NotificationService
   ) {}
 
   ngOnInit() {
@@ -160,7 +162,7 @@ export class HomeComponent implements OnInit {
   }
 
   goToSettings() {
-    alert('Impostazioni in arrivo (lingua, tema, privacy...)');
+    this.notification.show('Impostazioni in arrivo (lingua, tema, privacy...)', 'info');
   }
 
   searchCemeteries(): void {

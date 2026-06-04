@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { CemeteryService } from '../../Services/cemetery.service';
+import { NotificationService } from '../../Services/notification.service';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../Services/auth.service';
 import { NavbarComponent } from "../navbar/navbar.component";
@@ -32,7 +34,9 @@ export class DeceasedProfileComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
-    public authService: AuthService
+    public authService: AuthService,
+    private cemeteryService: CemeteryService,
+    private notification: NotificationService
   ) {}
 
   ngOnInit(): void {
@@ -102,9 +106,27 @@ export class DeceasedProfileComponent implements OnInit {
   }
 
   deleteMemory(memoryId: string): void {
-    if (!confirm('Eliminare questo ricordo?')) return;
-    this.http.delete<any[]>(`${this.API}/Deceaseds/${this.deceased._id}/memories/${memoryId}`)
-      .subscribe(memories => this.deceased.memories = memories);
+    if (!this.deceased || !this.deceased.memories) return;
+
+    const mem = (this.deceased.memories || []).find((m: any) => m.id === memoryId);
+    const author = mem?.author || 'un utente';
+    const currentUser = this.authService.getCurrentUser();
+    const currentName = currentUser?.fullName || currentUser?.username || '';
+
+    const msg = author && currentName && author !== currentName
+      ? `Stai per eliminare un commento scritto da ${author}. Procedere?`
+      : 'Eliminare questo ricordo?';
+
+    this.notification.confirm(msg, 'Conferma eliminazione').then(confirmed => {
+      if (!confirmed) return;
+      this.cemeteryService.deleteMemory(this.deceased._id, memoryId).subscribe({
+        next: (memories) => this.deceased.memories = memories,
+        error: (err) => {
+          console.error('Errore eliminazione ricordo:', err);
+          this.notification.show('Errore durante l\'eliminazione', 'error');
+        }
+      });
+    });
   }
 
   getAge(): number {

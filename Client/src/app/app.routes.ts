@@ -3,6 +3,8 @@ import { HomeComponent } from './Components/home/home.component';
 import { CemeteryDetailComponent } from './Components/cemetery-detail/cemetery-detail.component';
 import { QrScannerComponent } from './Components/qr-scanner/qr-scanner.component';
 import { SettingsComponent } from './Components/settings/settings.component';
+import { ReportProblemComponent } from './Components/settings/report-problem.component';
+import { VerifyEmailComponent } from './Components/settings/verify-email.component';
 import { MapFullscreenComponent } from './Components/map-fullscreen/map-fullscreen.component';
 import { LoginComponent } from './Components/login/login.component';
 import { ParentiComponent } from './Components/relatives/relatives.component';
@@ -16,6 +18,9 @@ export const routes: Routes = [
   { path: 'map', component: MapFullscreenComponent },
   { path: 'scan', component: QrScannerComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'settings/report', component: ReportProblemComponent },
+  { path: 'verify-email', component: VerifyEmailComponent },
+  { path: 'verify-email/:token', component: VerifyEmailComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'parenti', component: ParentiComponent },

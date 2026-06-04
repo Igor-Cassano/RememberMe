@@ -49,8 +49,8 @@
   width: 100%;
   padding: 0.95rem 1rem;
   border-radius: 18px;
-  border: 1px solid rgba(223, 215, 173, 0.2);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-color);
+  background: var(--input-bg);
   color: var(--text-primary);
 }
 

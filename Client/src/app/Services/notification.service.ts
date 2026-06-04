@@ -41,24 +41,24 @@ export class NotificationService {
       const cancelBtn = modal.querySelector('.btn-cancel') as HTMLButtonElement;
       const confirmBtn = modal.querySelector('.btn-confirm') as HTMLButtonElement;
 
-      cancelBtn.addEventListener('click', () => {
+      const closeModal = (result: boolean) => {
         modal.remove();
-        resolve(false);
-      });
+        document.body.classList.remove('modal-open');
+        resolve(result);
+      };
 
-      confirmBtn.addEventListener('click', () => {
-        modal.remove();
-        resolve(true);
-      });
+      cancelBtn.addEventListener('click', () => closeModal(false));
+
+      confirmBtn.addEventListener('click', () => closeModal(true));
 
       modal.addEventListener('click', (e: MouseEvent) => {
         if (e.target === modal) {
-          modal.remove();
-          resolve(false);
+          closeModal(false);
         }
       });
 
       document.body.appendChild(modal);
+      document.body.classList.add('modal-open');
     });
   }
 }

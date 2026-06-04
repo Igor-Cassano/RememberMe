@@ -47,8 +47,8 @@ export class RegisterComponent {
     this.authService.register(payload).subscribe({
       next: () => {
         this.isSubmitting = false;
-        this.notification.show('Registrazione completata. Accedi con le tue credenziali.', 'success');
-        this.router.navigate(['/settings']);
+        this.notification.show('Registrazione completata. Controlla la posta per autenticare il tuo account.', 'success');
+        this.router.navigate(['/verify-email'], { queryParams: { email: payload.email } });
       },
       error: () => {
         this.isSubmitting = false;

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { NavbarComponent } from '../../Components/navbar/navbar.component';
+import { RouterModule } from '@angular/router';
 import { CookieBannerComponent } from '../../Components/cookie-banner/cookie-banner.component';
 import { BottomBarComponent } from '../../Components/bottom-bar/bottom-bar.component';
 import { FooterComponent } from '../../Components/footer/footer.component';
@@ -21,7 +22,7 @@ interface User {
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent, CookieBannerComponent, FooterComponent, LoginComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent, CookieBannerComponent, FooterComponent, LoginComponent, RouterModule],
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
@@ -55,6 +56,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private location: Location,
     private authService: AuthService,
     private notification: NotificationService
@@ -65,6 +67,10 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const loginParam = this.route.snapshot.queryParamMap.get('login');
+    if (loginParam === '1') {
+      this.openLogin();
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
     this.applyTheme(this.currentTheme);
     this.applyFontSize();

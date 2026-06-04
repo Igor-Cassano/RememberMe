@@ -136,20 +136,21 @@
           border: 2px solid var(--border-color, rgba(0, 0, 0, 0.1));
           border-radius: 10px;
           font-size: 1rem;
-          background: var(--input-bg, rgba(255, 255, 255, 0.95));
-          color: var(black);
+          background: var(--input-bg);
+          color: var(--text-primary);
           transition: all 0.3s ease;
           font-family: inherit;
 
           &:focus {
             outline: none;
-            border-color: var(--accent-color, #b8ae79);
-            box-shadow: 0 0 0 4px rgba(0, 212, 255, 0.15);
-            background: var(--input-bg-focus, white);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(223, 215, 173, 0.16);
+            background: var(--input-bg-focus);
           }
 
           &::placeholder {
-            color: var(black);
+            color: var(--text-secondary);
+            opacity: 0.8;
           }
         }
       }

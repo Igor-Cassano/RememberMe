@@ -43,8 +43,31 @@
 
       <div class="login-footer">
         <p>Non hai un account? <a routerLink="/register" (click)="closeModal()">Registrati</a></p>
-        <p><a href="#forgot-password">Password dimenticata?</a></p>
+        <p><a href="#" (click)="openForgotModal()">Password dimenticata?</a></p>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- Forgot password modal -->
+<div class="forgot-modal-overlay" *ngIf="showForgot" (click)="closeForgot()">
+  <div class="forgot-modal" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closeForgot()" aria-label="Chiudi">
+      <i class="bi bi-x-lg"></i>
+    </button>
+    <div class="modal-content">
+      <h3>Recupera Password</h3>
+      <p>Inserisci la tua email per ricevere istruzioni</p>
+      <form (submit)="handleForgot($event)">
+        <div class="form-group">
+          <label for="forgot-email">Email</label>
+          <input id="forgot-email" type="email" [(ngModel)]="forgotEmail" name="forgotEmail" required />
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" (click)="closeForgot()">Annulla</button>
+          <button type="submit" class="btn primary">Invia</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

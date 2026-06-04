@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+<div class="verify-page">
+  <section class="verify-card">
+    <div class="verify-icon" [ngClass]="status"></div>
+    <h1 *ngIf="status === 'pending'">Verifica email in corso</h1>
+    <h1 *ngIf="status === 'success'">Email verificata!</h1>
+    <h1 *ngIf="status === 'error'">Verifica fallita</h1>
+    <p>{{ message }}</p>
+
+    <div class="verify-actions">
+      <button class="btn primary" (click)="goHome()">Torna alla home</button>
+      <button class="btn secondary" (click)="openLogin()">Vai al login</button>
+    </div>
+
+    <div class="verify-resend" *ngIf="status !== 'success'">
+      <p>Non hai ricevuto l\'email di verifica? Inserisci la tua email e reinvia il link.</p>
+      <div class="resend-row">
+        <input type="email" [(ngModel)]="email" placeholder="Email" />
+        <button class="btn primary" (click)="resendVerificationEmail()">Reinvia email</button>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>
